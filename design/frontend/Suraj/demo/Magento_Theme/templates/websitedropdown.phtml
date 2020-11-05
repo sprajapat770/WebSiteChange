@@ -1,0 +1,39 @@
+<?php
+
+/**
+*@var \Suraj\GraphQlTest\Block\View\CallWebsite $block;
+**/
+ ?>
+ <?php if (count($block->getWebsites())>1): ?>
+<div class="switcher website switcher-website" id="switcher-website">
+  <strong class="label switcher-label"><span><?php echo __('Select Website') ?></span></strong>
+  <div class="actions dropdown options switcher-options">
+    <?php foreach ($block->getWebsites() as $website): ?>
+      <?php if ($block->getCurrentWebsiteId() == $website->getId()): ?>
+        <div class="action toggle switcher-trigger"
+        role="button"
+        tabindex="0"
+        data-mage-init='{"dropdown":{}}'
+        data-toggle="dropdown"
+        data-trigger-keypress-button="true"
+        id="switcher-website-trigger">
+        <strong class="view-<?= $block->escapeHtml($block->getCurrentWebsiteCode()) ?>">
+        <span><?php echo $block->escapeHtml($website->getName()) ?></span>
+        </strong>
+        </div>
+      <?php endif; ?>
+    <?php endforeach; ?>
+    <ul class="dropdown switcher-dropdown" data-target="dropdown">
+      <?php foreach ($block->getWebsites() as $website): ?>
+        <?php if (!($block->getCurrentWebsiteId() == $website->getId())): ?>
+          <li class="switcher-option">
+            <a href='<?php echo $website->getDefaultStore()->getBaseUrl() ?>'>
+              <?php echo $block->escapeHtml($website->getName()) ?>
+            </a>
+          </li>
+        <?php endif; ?>
+      <?php endforeach; ?>
+    </ul>
+  </div>
+</div>
+<?php endif; ?>
